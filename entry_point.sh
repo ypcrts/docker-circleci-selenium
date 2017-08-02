@@ -7,16 +7,6 @@ function get_server_num() {
 
 export GEOMETRY="$SCREEN_WIDTH""x""$SCREEN_HEIGHT""x""$SCREEN_DEPTH"
 
-if [ ! -e /opt/selenium/config.json ]; then
-  echo No Selenium Node configuration file, the node-base image is not intended to be run directly. 1>&2
-  exit 1
-fi
-
-if [ -z "$HUB_PORT_4444_TCP_ADDR" ]; then
-  echo Not linked with a running Hub container 1>&2
-  exit 1
-fi
-
 function shutdown {
   kill -s SIGTERM $NODE_PID
   wait $NODE_PID
