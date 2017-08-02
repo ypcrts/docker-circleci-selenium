@@ -8,17 +8,19 @@ ENV DEBIAN_FRONTEND=noninteractive \
 # Miscellaneous packages
 # Includes minimal runtime used for executing non GUI Java programs
 #========================
+USER root
+RUN sed -i -e 's/deb\.debian\.org/http.debian.net/' /etc/apt/sources.list
 RUN apt-get -qqy update \
   && apt-get -qqy --no-install-recommends install \
     bzip2 \
     ca-certificates \
-    openjdk-8-jre-headless \
+    openjdk-7-jre-headless \
     tzdata \
     sudo \
     unzip \
     wget \
   && rm -rf /var/lib/apt/lists/* /var/cache/apt/* \
-  && sed -i 's/securerandom\.source=file:\/dev\/random/securerandom\.source=file:\/dev\/urandom/' ./usr/lib/jvm/java-8-openjdk-amd64/jre/lib/security/java.security
+  && sed -i 's/securerandom\.source=file:\/dev\/random/securerandom\.source=file:\/dev\/urandom/' /usr/lib/jvm/java-7-openjdk-amd64/jre/lib/security/java.security
 
 #===================
 # Timezone settings
