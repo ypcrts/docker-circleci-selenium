@@ -9,18 +9,19 @@ ENV DEBIAN_FRONTEND=noninteractive \
 # Includes minimal runtime used for executing non GUI Java programs
 #========================
 USER root
-RUN sed -i -e 's/deb\.debian\.org/http.debian.net/' /etc/apt/sources.list
+RUN sed -i -e 's/deb\.debian\.org/http.debian.net/' /etc/apt/sources.list && \
+  echo "deb http://http.debian.net/debian jessie-backports main" >> /etc/apt/sources.list
 RUN apt-get -qqy update \
   && apt-get -qqy --no-install-recommends install \
     bzip2 \
     ca-certificates \
-    openjdk-7-jre-headless \
     tzdata \
     sudo \
     unzip \
-    wget \
+    wget \ 
+  && apt-get -qqy -t jessie-backports install openjdk-8-jre-headless \
   && rm -rf /var/lib/apt/lists/* /var/cache/apt/* \
-  && sed -i 's/securerandom\.source=file:\/dev\/random/securerandom\.source=file:\/dev\/urandom/' /usr/lib/jvm/java-7-openjdk-amd64/jre/lib/security/java.security
+  && sed -i 's/securerandom\.source=file:\/dev\/random/securerandom\.source=file:\/dev\/urandom/' /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/security/java.security
 
 #===================
 # Timezone settings
