@@ -86,3 +86,5 @@ ENV DBUS_SESSION_BUS_ADDRESS=/dev/null
 COPY entry_point.sh /opt/bin/entry_point.sh
 
 ENTRYPOINT /opt/bin/entry_point.sh
+
+EXPOSE 4444
