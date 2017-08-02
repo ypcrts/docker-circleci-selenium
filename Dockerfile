@@ -34,17 +34,12 @@ RUN echo "${TZ}" > /etc/timezone \
 #========================================
 # Add normal user with passwordless sudo
 #========================================
-RUN useradd seluser \
-         --shell /bin/bash  \
-         --create-home \
-  && usermod -a -G sudo seluser \
-  && echo 'ALL ALL = (ALL) NOPASSWD: ALL' >> /etc/sudoers \
-  && echo 'seluser:secret' | chpasswd
+RUN echo 'circleci:secret' | chpasswd
 
 #===================================================
 # Run the following commands as non-privileged user
 #===================================================
-USER seluser
+USER circleci
 
 #==========
 # Selenium
