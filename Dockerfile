@@ -45,7 +45,7 @@ USER circleci
 # Selenium
 #==========
 RUN  sudo mkdir -p /opt/selenium \
-  && sudo chown seluser:seluser /opt/selenium \
+  && sudo chown circleci:circleci /opt/selenium \
   && wget --no-verbose https://selenium-release.storage.googleapis.com/3.4/selenium-server-standalone-3.4.0.jar \
     -O /opt/selenium/selenium-server-standalone.jar
 
