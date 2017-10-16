@@ -1,4 +1,4 @@
-FROM circleci/node:6.11.1-browsers
+FROM circleci/node:6-stretch-browsers
 
 # No interactive frontend during docker build
 ENV DEBIAN_FRONTEND=noninteractive \
@@ -11,7 +11,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
 USER root
 RUN sed -i -e 's/deb\.debian\.org/http.debian.net/' /etc/apt/sources.list && \
   echo "deb http://http.debian.net/debian jessie-backports main" >> /etc/apt/sources.list
-RUN apt-get -qqy update \
+  && apt-get -qqy update \
   && apt-get -qqy --no-install-recommends install \
     bzip2 \
     ca-certificates \
@@ -19,7 +19,7 @@ RUN apt-get -qqy update \
     sudo \
     unzip \
     wget \ 
-  && apt-get -qqy -t jessie-backports install openjdk-8-jre-headless \
+  && apt-get -qqy -t stretch install openjdk-8-jre-headless \
   && rm -rf /var/lib/apt/lists/* /var/cache/apt/* \
   && sed -i 's/securerandom\.source=file:\/dev\/random/securerandom\.source=file:\/dev\/urandom/' /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/security/java.security
 
@@ -29,7 +29,7 @@ RUN apt-get -qqy update \
 #===================
 ENV TZ "UTC"
 RUN echo "${TZ}" > /etc/timezone \
-  && dpkg-reconfigure --frontend noninteractive tzdata
+  && dpkg-reconfigure --frontend noninteractive tzdata \
 
 #========================================
 # Add normal user with passwordless sudo
@@ -52,10 +52,10 @@ RUN  sudo mkdir -p /opt/selenium \
 #============================
 # Some configuration options
 #============================
-ENV SCREEN_WIDTH 1360
-ENV SCREEN_HEIGHT 1020
-ENV SCREEN_DEPTH 24
-ENV DISPLAY :99.0
+ENV SCREEN_WIDTH 1360 \
+    SCREEN_HEIGHT 1020 \
+    SCREEN_DEPTH 24 \
+    DISPLAY :99.0
 
 #========================
 # Selenium Configuration
